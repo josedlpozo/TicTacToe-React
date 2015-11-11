@@ -1,0 +1,20 @@
+{
+  "name": "tresenraya",
+  "version": "1.0.0",
+  "description": "React project for IWEB subject",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "josedlpozo",
+  "license": "ISC",
+  "devDependencies": {
+    "babelify": "^6.4.0",
+    "browserify": "^11.2.0"
+  },
+  "dependencies": {
+    "react": "^0.14.2",
+    "react-bootstrap": "^0.27.3",
+    "react-dom": "^0.14.2"
+  }
+}
