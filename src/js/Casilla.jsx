@@ -11,9 +11,18 @@ let Casilla = React.createClass({
         if(this.props.valor==="-"){
             this.props.manejadorClick(this.props.indiceFila, this.props.indiceColumna);
 } },
+    getJugador: function(){
+        if(this.props.valor==="-"){
+          return "info";
+        }else if(this.props.valor==="X"){
+          return "success";
+        }else{
+          return "danger";
+        }
+    },
     render: function(){
         return (
-        <Button bsStyle="success" style={casillaStyle} className={this.props.valor==="-" ? "clickable":"no_clickable"}
+        <Button bsStyle={this.getJugador()} style={casillaStyle} className={this.props.valor==="-" ? "clickable":"no_clickable"}
         onClick={this.casillaClick}>
 {this.props.valor} </Button>
 ) }

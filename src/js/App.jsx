@@ -1,10 +1,13 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 import { Button } from 'react-bootstrap';
+import { DropdownButton } from 'react-bootstrap';
+import { MenuItem } from 'react-bootstrap';
 
 const Tablero = require('./Tablero.jsx');
 const Cabecera = require('./Cabecera.jsx');
 const Button2 = require('./Button2.jsx');
+const TextInput = require('./TextInput.jsx');
 const JUGADORX = "jugador 1 - las X";
 const JUGADOR0 = "jugador 2 - los 0";
 
@@ -21,7 +24,7 @@ var App = React.createClass({
         ] };
     },
     comprobarGanador: function(vals, newVal){
-      
+
       // Compruebo filas
 			var nRow, nCol;
       nRow = 0;
@@ -105,6 +108,9 @@ var App = React.createClass({
   	    	alert("Ha sido un empate!");
   	    }
       }
+    },
+    selectValue: function(eventKey){
+      alert(eventKey.text+","+eventKey.value);
     },
     render: function(){
       var texto;
