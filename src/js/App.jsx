@@ -1,5 +1,6 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
+import { Button } from 'react-bootstrap';
 
 const Tablero = require('./Tablero.jsx');
 const Cabecera = require('./Cabecera.jsx');
@@ -63,7 +64,6 @@ var App = React.createClass({
 			return false;
 	  },
     comprobarEmpate: function(vals){
-      var tie = false;
       var empate = 0;
       var nRow, nCol;
       for (nRow = 0; nRow < 3; nRow++) {

@@ -34055,6 +34055,8 @@ module.exports = require('./lib/React');
 },{"./lib/React":262}],395:[function(require,module,exports){
 'use strict';
 
+var _reactBootstrap = require('react-bootstrap');
+
 var React = require('react');
 var ReactDOM = require('react-dom');
 
@@ -34117,7 +34119,6 @@ var App = React.createClass({
     return false;
   },
   comprobarEmpate: function comprobarEmpate(vals) {
-    var tie = false;
     var empate = 0;
     var nRow, nCol;
     for (nRow = 0; nRow < 3; nRow++) {
@@ -34164,7 +34165,7 @@ var App = React.createClass({
   } });
 module.exports = App;
 
-},{"./Button2.jsx":396,"./Cabecera.jsx":397,"./Tablero.jsx":399,"react":394,"react-dom":238}],396:[function(require,module,exports){
+},{"./Button2.jsx":396,"./Cabecera.jsx":397,"./Tablero.jsx":399,"react":394,"react-bootstrap":71,"react-dom":238}],396:[function(require,module,exports){
 'use strict';
 
 var _reactBootstrap = require('react-bootstrap');
@@ -34173,6 +34174,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var buttonStyle = {
     height: '50px',
+    marginLeft: '50px',
+    marginTop: '50px',
     width: '200px'
 };
 var Button2 = React.createClass({

@@ -3,6 +3,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 const buttonStyle = {
     height: '50px',
+    marginLeft: '50px',
+    marginTop: '50px',
     width: '200px'
 };
 let Button2 = React.createClass({
