@@ -8,6 +8,7 @@ const Button2 = require('./Button2.jsx');
 const JUGADORX = "jugador 1 - las X";
 const JUGADOR0 = "jugador 2 - los 0";
 
+
 var App = React.createClass({
 
     getInitialState: function(){
@@ -20,6 +21,8 @@ var App = React.createClass({
         ] };
     },
     comprobarGanador: function(vals, newVal){
+      
+      // Compruebo filas
 			var nRow, nCol;
       nRow = 0;
       nCol = 0;
@@ -38,6 +41,8 @@ var App = React.createClass({
         num = 0;
         nCol = 0;
       }
+
+      //Compruebo columnas
       nRow = 0;
       nCol = 0;
       var num = 0;
@@ -55,9 +60,13 @@ var App = React.createClass({
         num = 0;
         nRow = 0;
       }
+
+      //Diagonal principal
       if((vals[0][0] === vals[1][1]) && (vals[0][0] === vals[2][2]) && (vals[0][0] === newVal)){
         return true;
       }
+
+      //Antidiagonal
       if((vals[0][2] === vals[1][1]) && (vals[0][2] === vals[2][0]) && (vals[0][2] === newVal)){
         return true;
       }
