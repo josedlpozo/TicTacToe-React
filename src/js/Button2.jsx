@@ -1,9 +1,9 @@
-
+import { Button } from 'react-bootstrap';
 var React = require('react');
 var ReactDOM = require('react-dom');
 const buttonStyle = {
-    height: '100px',
-    width: '100px'
+    height: '50px',
+    width: '200px'
 };
 let Button2 = React.createClass({
     buttonClick: function(){
@@ -11,8 +11,8 @@ let Button2 = React.createClass({
    },
     render: function(){
         return (
-          <button style={buttonStyle} onClick={this.buttonClick}>
-Reiniciar partida </button>
+          <Button bsStyle="primary" style={buttonStyle} onClick={this.buttonClick}>
+Reiniciar partida </Button>
 ) }
 });
 module.exports = Button2;

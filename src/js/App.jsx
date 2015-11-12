@@ -20,40 +20,46 @@ var App = React.createClass({
     },
     comprobarGanador: function(vals, newVal){
 			var nRow, nCol;
-			// comprobar filas
-			for (nRow = 0; nRow < 3; nRow++) {
-			    for (nCol = 0; nCol < 3; nCol++) {
-				    if (vals[nRow][nCol]!=newVal) {
-				        break;
-				    }
-				    if (nCol == 2) {
-				        return true;
-				    }
-			  }
-			}
-
-			// comprobar columnas
-			for (nCol = 0; nCol < 3; nCol++) {
-			    for (nRow = 0; nRow < 3; nRow++) {
-				    if (vals[nRow][nCol]!=newVal) {
-				        break;
-				    }
-				    if (nRow == 2) {
-				        return true;
-				    }
-			  }
-			}
-
-			// Comprobar diagonal
-	    if (vals[0][0]==newVal && vals[1][1]==newVal && vals[2][2]==newVal) {
-	        return true;
-	    }
-
-			// Comprobar anti-diagonal
-	    if (vals[0][2]==newVal && vals[1][1]==newVal && vals[2][0]==newVal) {
-	        return true;
-	    }
-
+      nRow = 0;
+      nCol = 0;
+      var num = 0;
+      while(nRow<3){
+        while(nCol<3){
+          if(vals[nRow][nCol] === newVal){
+            num++;
+          }else{
+            num = 0;
+          }
+          nCol++;
+        }
+        if(num === 3) return true;
+        nRow++;
+        num = 0;
+        nCol = 0;
+      }
+      nRow = 0;
+      nCol = 0;
+      var num = 0;
+      while(nCol<3){
+        while(nRow<3){
+          if(vals[nRow][nCol] === newVal){
+            num++;
+          }else{
+            num = 0;
+          }
+          nRow++;
+        }
+        if(num === 3) return true;
+        nCol++;
+        num = 0;
+        nRow = 0;
+      }
+      if((vals[0][0] === vals[1][1]) && (vals[0][0] === vals[2][2]) && (vals[0][0] === newVal)){
+        return true;
+      }
+      if((vals[0][2] === vals[1][1]) && (vals[0][2] === vals[2][0]) && (vals[0][2] === newVal)){
+        return true;
+      }
 			return false;
 	  },
     comprobarEmpate: function(vals){
@@ -85,10 +91,11 @@ var App = React.createClass({
       });
       if(this.comprobarGanador(valores, nuevoValor)){
 	    	alert("Ha ganado: " + this.state.turno);
-	    }
-      if(this.comprobarEmpate(valores)){
-	    	alert("Ha sido un empate!");
-	    }
+	    }else{
+        if(this.comprobarEmpate(valores)){
+  	    	alert("Ha sido un empate!");
+  	    }
+      }
     },
     render: function(){
       var texto;
