@@ -34186,8 +34186,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var buttonStyle = {
     height: '50px',
-    marginLeft: '50px',
-    marginTop: '50px',
+    marginLeft: '30%',
+    marginTop: '70px',
     width: '200px'
 };
 var Button2 = React.createClass({
@@ -34199,7 +34199,7 @@ var Button2 = React.createClass({
     render: function render() {
         return React.createElement(
             _reactBootstrap.Button,
-            { bsStyle: 'primary', style: buttonStyle, onClick: this.buttonClick },
+            { className: 'centrar', bsStyle: 'primary', style: buttonStyle, onClick: this.buttonClick },
             'Reiniciar partida '
         );
     }
@@ -34218,7 +34218,7 @@ var Cabecera = React.createClass({
     render: function render() {
         return React.createElement(
             'header',
-            { className: 'cabecera' },
+            { className: 'centrar' },
             this.props.texto
         );
     } });
@@ -34293,7 +34293,7 @@ var Tablero = React.createClass({
     }).bind(this));
     return React.createElement(
       'div',
-      null,
+      { className: 'centrar' },
       casillas
     );
   }

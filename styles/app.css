@@ -4,3 +4,14 @@
 .no_clickable {
        cursor: not-allowed;
 }
+.cabecera{
+  text-align: center;
+  margin: '70px';
+}
+.centrar{
+  margin: auto;
+  width: 50%;
+}
+body{
+  background-color: '#99ccff';
+}
