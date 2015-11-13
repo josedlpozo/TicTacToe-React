@@ -1,43 +1,26 @@
+import { DropdownButton } from 'react-bootstrap';
+import { MenuItem } from 'react-bootstrap';
 var React = require('react');
 var ReactDOM = require('react-dom');
 
 var TextInput = React.createClass({
-  getInitialState() {
-    return {
-      value: ''
-    };
+  getInitialState: function() {
+    return {value: 'Hello!'};
   },
-
-  validationState() {
-    let length = this.state.value.length;
-    if (length > 10) return 'success';
-    else if (length > 5) return 'warning';
-    else if (length > 0) return 'error';
+  handleChange: function(event, eventkey) {
+    this.setState({value: event.target.value});
   },
-
-  handleChange() {
-    // This could also be done using ReactLink:
-    // http://facebook.github.io/react/docs/two-way-binding-helpers.html
-    this.setState({
-      value: this.refs.input.getValue()
-    });
+  click: function(){
+    this.props.manejadorTextInput(this.state.value);
   },
-
-  render() {
+  render: function() {
+    var value = this.state.value;
     return (
-      <Input
-        type="text"
-        value={this.state.value}
-        placeholder="Enter text"
-        label="Working example with validation"
-        help="Validation is based on string length."
-        bsStyle={this.validationState()}
-        hasFeedback
-        ref="input"
-        groupClassName="group-class"
-        labelClassName="label-class"
-        onChange={this.handleChange} />
-    );
+      <div>
+        <input type="" value={value} onChange={this.handleChange} />;
+        <button onClick={this.click}>Set</button>
+      </div>
+    )
   }
 });
 

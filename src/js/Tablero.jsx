@@ -22,7 +22,7 @@ var Tablero = React.createClass({
     )
     }.bind(this));
     return (
-      <div className="centrar">
+      <div >
         {casillas}
       </div>
     );

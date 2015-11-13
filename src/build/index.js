@@ -34071,9 +34071,38 @@ var App = React.createClass({
   displayName: 'App',
 
   getInitialState: function getInitialState() {
+    var rows = 3;
+    var x = new Array(rows);
+    for (var i = 0; i < rows; i++) {
+      x[i] = new Array(rows);
+    }
+    for (var i = 0; i < rows; i++) {
+      for (var j = 0; j < rows; j++) {
+        x[i][j] = '-';
+      }
+    }
     return {
+      rows: 3,
       turno: JUGADORX,
-      valores: [['-', '-', '-'], ['-', '-', '-'], ['-', '-', '-']] };
+      valores: x
+    };
+  },
+  setRowsAndValores: function setRowsAndValores(row) {
+    var rows = row;
+    var x = new Array(rows);
+    for (var i = 0; i < rows; i++) {
+      x[i] = new Array(rows);
+    }
+    for (var i = 0; i < rows; i++) {
+      for (var j = 0; j < rows; j++) {
+        x[i][j] = '-';
+      }
+    }
+    return {
+      rows: rows,
+      turno: JUGADORX,
+      valores: x
+    };
   },
   comprobarGanador: function comprobarGanador(vals, newVal) {
 
@@ -34082,8 +34111,8 @@ var App = React.createClass({
     nRow = 0;
     nCol = 0;
     var num = 0;
-    while (nRow < 3) {
-      while (nCol < 3) {
+    while (nRow < this.state.rows) {
+      while (nCol < this.state.rows) {
         if (vals[nRow][nCol] === newVal) {
           num++;
         } else {
@@ -34091,7 +34120,7 @@ var App = React.createClass({
         }
         nCol++;
       }
-      if (num === 3) return true;
+      if (num === this.state.rows) return true;
       nRow++;
       num = 0;
       nCol = 0;
@@ -34101,8 +34130,8 @@ var App = React.createClass({
     nRow = 0;
     nCol = 0;
     var num = 0;
-    while (nCol < 3) {
-      while (nRow < 3) {
+    while (nCol < this.state.rows) {
+      while (nRow < this.state.rows) {
         if (vals[nRow][nCol] === newVal) {
           num++;
         } else {
@@ -34110,21 +34139,38 @@ var App = React.createClass({
         }
         nRow++;
       }
-      if (num === 3) return true;
+      if (num === this.state.rows) return true;
       nCol++;
       num = 0;
       nRow = 0;
     }
+    nRow = 0;
+    num = 0;
 
-    //Diagonal principal
-    if (vals[0][0] === vals[1][1] && vals[0][0] === vals[2][2] && vals[0][0] === newVal) {
-      return true;
+    while (nRow < this.state.rows) {
+      if (vals[nRow][nRow] === newVal) {
+        num++;
+      } else {
+        num = 0;
+      }
+      nRow++;
     }
+    if (num === this.state.rows) return true;
 
-    //Antidiagonal
-    if (vals[0][2] === vals[1][1] && vals[0][2] === vals[2][0] && vals[0][2] === newVal) {
-      return true;
+    nCol = this.state.rows - 1;
+    nRow = 0;
+    num = 0;
+    while (nCol >= 0 && nRow < this.state.rows) {
+      if (vals[nRow][nCol] === newVal) {
+        num++;
+      } else {
+        num = 0;
+      }
+      nRow++;
+      nCol--;
     }
+    if (num === this.state.rows) return true;
+
     return false;
   },
   comprobarEmpate: function comprobarEmpate(vals) {
@@ -34137,7 +34183,8 @@ var App = React.createClass({
         }
       }
     }
-    if (empate === 9) return true;
+    var cuadros = this.state.rows * this.state.rows;
+    if (empate === cuadros) return true;
   },
   reiniciarClick: function reiniciarClick() {
     var reinicio = confirm("Desea realmente reiniciar la partida?");
@@ -34161,6 +34208,20 @@ var App = React.createClass({
       }
     }
   },
+  textInputClick: function textInputClick(rows) {
+    var y = parseInt(rows, 10);
+    if (typeof y === 'number') {
+      if (y > 2 && y < 8) {
+        this.setState(this.setRowsAndValores(y));
+      } else if (y <= 2) {
+        alert("Dimensiones demasiado pequeñas");
+      } else if (y >= 8) {
+        alert("Dimensiones demasiado grandes");
+      } else {
+        alert("No es un número");
+      }
+    }
+  },
   selectValue: function selectValue(eventKey) {
     alert(eventKey.text + "," + eventKey.value);
   },
@@ -34172,7 +34233,8 @@ var App = React.createClass({
       null,
       React.createElement(Cabecera, { texto: texto }),
       React.createElement(Tablero, { valores: this.state.valores, manejadorTableroClick: this.appClick }),
-      React.createElement(Button2, { manejadorButtonClick: this.reiniciarClick })
+      React.createElement(Button2, { manejadorButtonClick: this.reiniciarClick }),
+      React.createElement(TextInput, { manejadorTextInput: this.textInputClick })
     );
   } });
 module.exports = App;
@@ -34293,7 +34355,7 @@ var Tablero = React.createClass({
     }).bind(this));
     return React.createElement(
       'div',
-      { className: 'centrar' },
+      null,
       casillas
     );
   }
@@ -34304,6 +34366,8 @@ module.exports = Tablero;
 },{"./Casilla.jsx":398,"react":394,"react-dom":238}],400:[function(require,module,exports){
 'use strict';
 
+var _reactBootstrap = require('react-bootstrap');
+
 var React = require('react');
 var ReactDOM = require('react-dom');
 
@@ -34311,43 +34375,33 @@ var TextInput = React.createClass({
   displayName: 'TextInput',
 
   getInitialState: function getInitialState() {
-    return {
-      value: ''
-    };
+    return { value: 'Hello!' };
   },
-
-  validationState: function validationState() {
-    var length = this.state.value.length;
-    if (length > 10) return 'success';else if (length > 5) return 'warning';else if (length > 0) return 'error';
+  handleChange: function handleChange(event, eventkey) {
+    this.setState({ value: event.target.value });
   },
-
-  handleChange: function handleChange() {
-    // This could also be done using ReactLink:
-    // http://facebook.github.io/react/docs/two-way-binding-helpers.html
-    this.setState({
-      value: this.refs.input.getValue()
-    });
+  click: function click() {
+    this.props.manejadorTextInput(this.state.value);
   },
-
   render: function render() {
-    return React.createElement(Input, {
-      type: 'text',
-      value: this.state.value,
-      placeholder: 'Enter text',
-      label: 'Working example with validation',
-      help: 'Validation is based on string length.',
-      bsStyle: this.validationState(),
-      hasFeedback: true,
-      ref: 'input',
-      groupClassName: 'group-class',
-      labelClassName: 'label-class',
-      onChange: this.handleChange });
+    var value = this.state.value;
+    return React.createElement(
+      'div',
+      null,
+      React.createElement('input', { type: '', value: value, onChange: this.handleChange }),
+      ';',
+      React.createElement(
+        'button',
+        { onClick: this.click },
+        'Set'
+      )
+    );
   }
 });
 
 module.exports = TextInput;
 
-},{"react":394,"react-dom":238}],401:[function(require,module,exports){
+},{"react":394,"react-bootstrap":71,"react-dom":238}],401:[function(require,module,exports){
 'use strict';
 
 var React = require('react');

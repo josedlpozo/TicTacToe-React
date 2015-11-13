@@ -27,4 +27,4 @@ _1. Añadir bootstrap_ --> HECHO
 
 _2. Cambiar estilo_ --> HECHO
 
-_3. Añadir que la dimension del tablero sea configurable._
+_3. Añadir que la dimension del tablero sea configurable._ --> HECHO
