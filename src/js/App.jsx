@@ -27,6 +27,7 @@ var App = React.createClass({
       }
       return {
         rows : 3,
+        ganador : false,
         turno: JUGADORX,
         valores: x
       };
@@ -133,7 +134,7 @@ var App = React.createClass({
     reiniciarClick: function(){
       var reinicio = confirm("Desea realmente reiniciar la partida?");
       if (reinicio == true) {
-        this.setState(this.getInitialState());
+        this.setState(this.setRowsAndValores(this.state.rows));
       }
     },
     appClick: function(numeroFila, numberoColumna){
@@ -145,6 +146,7 @@ var App = React.createClass({
         valores: this.state.valores
       });
       if(this.comprobarGanador(valores, nuevoValor)){
+        this.state.ganador = true;
 	    	alert("Ha ganado: " + this.state.turno);
 	    }else{
         if(this.comprobarEmpate(valores)){
@@ -169,13 +171,17 @@ var App = React.createClass({
     selectValue: function(eventKey){
       alert(eventKey.text+","+eventKey.value);
     },
+    getGanador: function(){
+      alert(this.state.ganador);
+      return this.state.ganador;
+    },
     render: function(){
       var texto;
       texto = "Turno del " + this.state.turno;
       return (
         <div>
           <Cabecera texto={texto}/>
-          <Tablero valores={this.state.valores} manejadorTableroClick={this.appClick}/>
+          <Tablero ganador={this.state.ganador} valores={this.state.valores} manejadorTableroClick={this.appClick}/>
           <Button2 manejadorButtonClick={this.reiniciarClick}/>
           <TextInput manejadorTextInput={this.textInputClick}/>
         </div> )

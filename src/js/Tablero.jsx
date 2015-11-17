@@ -12,17 +12,17 @@ var Tablero = React.createClass({
       let fila = valoresFila.map(function(valor, indiceColumna){
         let mykey = ""+indiceFila+indiceColumna;
         return (
-          <Casilla valor={valor} indiceFila={indiceFila} indiceColumna={indiceColumna} key={mykey} manejadorClick={this.tableroClick}/>
+          <Casilla ganador={this.props.ganador} valor={valor} indiceFila={indiceFila} indiceColumna={indiceColumna} key={mykey} manejadorClick={this.tableroClick}/>
         )
       }.bind(this));
     return (
-      <div key={"fila"+indiceFila}>
+      <div className="centrar" key={"fila"+indiceFila}>
         {fila}
       </div>
     )
     }.bind(this));
     return (
-      <div >
+      <div className="centrar">
         {casillas}
       </div>
     );

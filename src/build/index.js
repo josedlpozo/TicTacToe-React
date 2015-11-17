@@ -34083,6 +34083,7 @@ var App = React.createClass({
     }
     return {
       rows: 3,
+      ganador: false,
       turno: JUGADORX,
       valores: x
     };
@@ -34189,7 +34190,7 @@ var App = React.createClass({
   reiniciarClick: function reiniciarClick() {
     var reinicio = confirm("Desea realmente reiniciar la partida?");
     if (reinicio == true) {
-      this.setState(this.getInitialState());
+      this.setState(this.setRowsAndValores(this.state.rows));
     }
   },
   appClick: function appClick(numeroFila, numberoColumna) {
@@ -34201,6 +34202,7 @@ var App = React.createClass({
       valores: this.state.valores
     });
     if (this.comprobarGanador(valores, nuevoValor)) {
+      this.state.ganador = true;
       alert("Ha ganado: " + this.state.turno);
     } else {
       if (this.comprobarEmpate(valores)) {
@@ -34225,6 +34227,10 @@ var App = React.createClass({
   selectValue: function selectValue(eventKey) {
     alert(eventKey.text + "," + eventKey.value);
   },
+  getGanador: function getGanador() {
+    alert(this.state.ganador);
+    return this.state.ganador;
+  },
   render: function render() {
     var texto;
     texto = "Turno del " + this.state.turno;
@@ -34232,7 +34238,7 @@ var App = React.createClass({
       'div',
       null,
       React.createElement(Cabecera, { texto: texto }),
-      React.createElement(Tablero, { valores: this.state.valores, manejadorTableroClick: this.appClick }),
+      React.createElement(Tablero, { ganador: this.state.ganador, valores: this.state.valores, manejadorTableroClick: this.appClick }),
       React.createElement(Button2, { manejadorButtonClick: this.reiniciarClick }),
       React.createElement(TextInput, { manejadorTextInput: this.textInputClick })
     );
@@ -34295,35 +34301,45 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 
 var casillaStyle = {
-    height: '100px',
-    width: '100px'
+  height: '100px',
+  width: '100px'
 };
 var Casilla = React.createClass({
-    displayName: 'Casilla',
+  displayName: 'Casilla',
 
-    casillaClick: function casillaClick() {
-        if (this.props.valor === "-") {
-            this.props.manejadorClick(this.props.indiceFila, this.props.indiceColumna);
-        }
-    },
-    getJugador: function getJugador() {
-        if (this.props.valor === "-") {
-            return "info";
-        } else if (this.props.valor === "X") {
-            return "success";
-        } else {
-            return "danger";
-        }
-    },
-    render: function render() {
-        return React.createElement(
-            _reactBootstrap.Button,
-            { bsStyle: this.getJugador(), style: casillaStyle, className: this.props.valor === "-" ? "clickable" : "no_clickable",
-                onClick: this.casillaClick },
-            this.props.valor,
-            ' '
-        );
+  casillaClick: function casillaClick() {
+
+    if (this.props.valor === "-" && this.props.ganador !== true) {
+      this.props.manejadorClick(this.props.indiceFila, this.props.indiceColumna);
     }
+  },
+  getClassName: function getClassName() {
+    if (this.props.ganador === true) {
+      return "no_clickable";
+    } else if (this.props.ganador !== true && this.props.valor === "-") {
+      return "clickable";
+    } else {
+      return "no_clickable";
+    }
+  },
+  getJugador: function getJugador() {
+    if (this.props.valor === "-") {
+      return "info";
+    } else if (this.props.valor === "X") {
+      return "success";
+    } else {
+      return "danger";
+    }
+  },
+  render: function render() {
+    return React.createElement(
+      _reactBootstrap.Button,
+      { bsStyle: this.getJugador(), style: casillaStyle, className: this.getClassName(),
+        onClick: this.casillaClick },
+      this.props.valor,
+      ' '
+    );
+  }
 });
 module.exports = Casilla;
 
@@ -34345,17 +34361,17 @@ var Tablero = React.createClass({
     var casillas = this.props.valores.map((function (valoresFila, indiceFila) {
       var fila = valoresFila.map((function (valor, indiceColumna) {
         var mykey = "" + indiceFila + indiceColumna;
-        return React.createElement(Casilla, { valor: valor, indiceFila: indiceFila, indiceColumna: indiceColumna, key: mykey, manejadorClick: this.tableroClick });
+        return React.createElement(Casilla, { ganador: this.props.ganador, valor: valor, indiceFila: indiceFila, indiceColumna: indiceColumna, key: mykey, manejadorClick: this.tableroClick });
       }).bind(this));
       return React.createElement(
         'div',
-        { key: "fila" + indiceFila },
+        { className: 'centrar', key: "fila" + indiceFila },
         fila
       );
     }).bind(this));
     return React.createElement(
       'div',
-      null,
+      { className: 'centrar' },
       casillas
     );
   }
@@ -34375,7 +34391,7 @@ var TextInput = React.createClass({
   displayName: 'TextInput',
 
   getInitialState: function getInitialState() {
-    return { value: 'Hello!' };
+    return { value: '3' };
   },
   handleChange: function handleChange(event, eventkey) {
     this.setState({ value: event.target.value });
@@ -34387,9 +34403,13 @@ var TextInput = React.createClass({
     var value = this.state.value;
     return React.createElement(
       'div',
-      null,
+      { className: 'centrar' },
+      React.createElement(
+        'p',
+        null,
+        ' Introduzca el número de casillas con las que quiere jugar '
+      ),
       React.createElement('input', { type: '', value: value, onChange: this.handleChange }),
-      ';',
       React.createElement(
         'button',
         { onClick: this.click },

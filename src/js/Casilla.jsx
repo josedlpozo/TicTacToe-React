@@ -8,9 +8,19 @@ const casillaStyle = {
 };
 let Casilla = React.createClass({
     casillaClick: function(){
-        if(this.props.valor==="-"){
+
+        if(this.props.valor==="-" && this.props.ganador !== true){
             this.props.manejadorClick(this.props.indiceFila, this.props.indiceColumna);
 } },
+    getClassName: function(){
+      if(this.props.ganador === true){
+        return "no_clickable";
+      }else if(this.props.ganador !== true && this.props.valor === "-"){
+        return "clickable";
+      }else{
+        return "no_clickable";
+      }
+    },
     getJugador: function(){
         if(this.props.valor==="-"){
           return "info";
@@ -22,7 +32,7 @@ let Casilla = React.createClass({
     },
     render: function(){
         return (
-        <Button bsStyle={this.getJugador()} style={casillaStyle} className={this.props.valor==="-" ? "clickable":"no_clickable"}
+        <Button bsStyle={this.getJugador()} style={casillaStyle} className={this.getClassName()}
         onClick={this.casillaClick}>
 {this.props.valor} </Button>
 ) }
