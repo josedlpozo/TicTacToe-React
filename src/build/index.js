@@ -34053,23 +34053,26 @@ module.exports = warning;
 module.exports = require('./lib/React');
 
 },{"./lib/React":262}],395:[function(require,module,exports){
+// Variables requeridas de React al no importarlas  en html
 'use strict';
-
-var _reactBootstrap = require('react-bootstrap');
 
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+// Componentes a renderizar
 var Tablero = require('./Tablero.jsx');
 var Cabecera = require('./Cabecera.jsx');
 var Button2 = require('./Button2.jsx');
 var TextInput = require('./TextInput.jsx');
+
 var JUGADORX = "jugador 1 - las X";
 var JUGADOR0 = "jugador 2 - los 0";
 
+// Clase de aplicación --> Master
 var App = React.createClass({
   displayName: 'App',
 
+  // Estado inicial
   getInitialState: function getInitialState() {
     var rows = 3;
     var x = new Array(rows);
@@ -34088,6 +34091,7 @@ var App = React.createClass({
       valores: x
     };
   },
+  // Establece numero de filas y valores
   setRowsAndValores: function setRowsAndValores(row) {
     var rows = row;
     var x = new Array(rows);
@@ -34101,10 +34105,12 @@ var App = React.createClass({
     }
     return {
       rows: rows,
+      ganador: false,
       turno: JUGADORX,
       valores: x
     };
   },
+  // Comprobar si hay ganador tras click en tablero
   comprobarGanador: function comprobarGanador(vals, newVal) {
 
     // Compruebo filas
@@ -34147,7 +34153,7 @@ var App = React.createClass({
     }
     nRow = 0;
     num = 0;
-
+    // Compruebo diagonal principal
     while (nRow < this.state.rows) {
       if (vals[nRow][nRow] === newVal) {
         num++;
@@ -34161,6 +34167,7 @@ var App = React.createClass({
     nCol = this.state.rows - 1;
     nRow = 0;
     num = 0;
+    // Compruebo antidiagonal
     while (nCol >= 0 && nRow < this.state.rows) {
       if (vals[nRow][nCol] === newVal) {
         num++;
@@ -34174,11 +34181,12 @@ var App = React.createClass({
 
     return false;
   },
+  // Comprobar si ha sido un empate tras un click
   comprobarEmpate: function comprobarEmpate(vals) {
     var empate = 0;
     var nRow, nCol;
-    for (nRow = 0; nRow < 3; nRow++) {
-      for (nCol = 0; nCol < 3; nCol++) {
+    for (nRow = 0; nRow < this.state.rows; nRow++) {
+      for (nCol = 0; nCol < this.state.rows; nCol++) {
         if (vals[nRow][nCol] !== '-') {
           empate++;
         }
@@ -34187,20 +34195,24 @@ var App = React.createClass({
     var cuadros = this.state.rows * this.state.rows;
     if (empate === cuadros) return true;
   },
+  // Reinicia el estado inicial
   reiniciarClick: function reiniciarClick() {
     var reinicio = confirm("Desea realmente reiniciar la partida?");
     if (reinicio == true) {
       this.setState(this.setRowsAndValores(this.state.rows));
     }
   },
+  // Click en Casilla - Tablero
   appClick: function appClick(numeroFila, numberoColumna) {
     var valores = this.state.valores;
     var nuevoValor = this.state.turno === JUGADORX ? 'X' : '0';
     valores[numeroFila][numberoColumna] = nuevoValor;
+    // Cambio de estado
     this.setState({
       turno: this.state.turno === JUGADORX ? JUGADOR0 : JUGADORX,
       valores: this.state.valores
     });
+    // Compruebo ganador o empate
     if (this.comprobarGanador(valores, nuevoValor)) {
       this.state.ganador = true;
       alert("Ha ganado: " + this.state.turno);
@@ -34210,6 +34222,7 @@ var App = React.createClass({
       }
     }
   },
+  // Introduce texto de tamaño de tablero
   textInputClick: function textInputClick(rows) {
     var y = parseInt(rows, 10);
     if (typeof y === 'number') {
@@ -34224,13 +34237,11 @@ var App = React.createClass({
       }
     }
   },
-  selectValue: function selectValue(eventKey) {
-    alert(eventKey.text + "," + eventKey.value);
-  },
+  // Hay ganador --> sirve para bloquear clicks en el tablero
   getGanador: function getGanador() {
-    alert(this.state.ganador);
     return this.state.ganador;
   },
+  // renderizo
   render: function render() {
     var texto;
     texto = "Turno del " + this.state.turno;
@@ -34245,25 +34256,32 @@ var App = React.createClass({
   } });
 module.exports = App;
 
-},{"./Button2.jsx":396,"./Cabecera.jsx":397,"./Tablero.jsx":399,"./TextInput.jsx":400,"react":394,"react-bootstrap":71,"react-dom":238}],396:[function(require,module,exports){
+},{"./Button2.jsx":396,"./Cabecera.jsx":397,"./Tablero.jsx":399,"./TextInput.jsx":400,"react":394,"react-dom":238}],396:[function(require,module,exports){
+// Variables requeridas de React al no importarlas  en html
 'use strict';
+
+// Importo componente Button de bootstrap
 
 var _reactBootstrap = require('react-bootstrap');
 
+// Estilo del componente
 var React = require('react');
-var ReactDOM = require('react-dom');
-var buttonStyle = {
+var ReactDOM = require('react-dom');var buttonStyle = {
     height: '50px',
     marginLeft: '30%',
     marginTop: '70px',
     width: '200px'
 };
+
+// Componente React button
 var Button2 = React.createClass({
     displayName: 'Button2',
 
+    // Click delega acción a app
     buttonClick: function buttonClick() {
         this.props.manejadorButtonClick();
     },
+    // renderizo
     render: function render() {
         return React.createElement(
             _reactBootstrap.Button,
@@ -34275,44 +34293,53 @@ var Button2 = React.createClass({
 module.exports = Button2;
 
 },{"react":394,"react-bootstrap":71,"react-dom":238}],397:[function(require,module,exports){
+// Variables requeridas de React al no importarlas  en html
 'use strict';
 
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+// Componente cabecera
 var Cabecera = React.createClass({
-    displayName: 'Cabecera',
+          displayName: 'Cabecera',
 
-    render: function render() {
-        return React.createElement(
-            'header',
-            { className: 'centrar' },
-            this.props.texto
-        );
-    } });
+          // renderizo
+          render: function render() {
+                    return React.createElement(
+                              'header',
+                              { className: 'centrar' },
+                              this.props.texto
+                    );
+          } });
 module.exports = Cabecera;
 
 },{"react":394,"react-dom":238}],398:[function(require,module,exports){
+// Variables requeridas de React al no importarlas  en html
 'use strict';
+
+// Importo componente Button de bootstrap
 
 var _reactBootstrap = require('react-bootstrap');
 
+// Estilo del componente
 var React = require('react');
-var ReactDOM = require('react-dom');
-
-var casillaStyle = {
+var ReactDOM = require('react-dom');var casillaStyle = {
   height: '100px',
   width: '100px'
 };
+
+// Componente casilla
 var Casilla = React.createClass({
   displayName: 'Casilla',
 
+  // Click que delega en app
   casillaClick: function casillaClick() {
 
     if (this.props.valor === "-" && this.props.ganador !== true) {
       this.props.manejadorClick(this.props.indiceFila, this.props.indiceColumna);
     }
   },
+  // Devuelve tipo de clase --> clickable o no para bloquear
   getClassName: function getClassName() {
     if (this.props.ganador === true) {
       return "no_clickable";
@@ -34322,6 +34349,7 @@ var Casilla = React.createClass({
       return "no_clickable";
     }
   },
+  // Devuelve jugador actual --> también cambia el color del boton
   getJugador: function getJugador() {
     if (this.props.valor === "-") {
       return "info";
@@ -34331,6 +34359,7 @@ var Casilla = React.createClass({
       return "danger";
     }
   },
+  // renderizo
   render: function render() {
     return React.createElement(
       _reactBootstrap.Button,
@@ -34344,19 +34373,24 @@ var Casilla = React.createClass({
 module.exports = Casilla;
 
 },{"react":394,"react-bootstrap":71,"react-dom":238}],399:[function(require,module,exports){
+// Variables requeridas de React al no importarlas  en html
 'use strict';
 
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+// Componente a renderizar
 var Casilla = require('./Casilla.jsx');
 
+// Componente tablero
 var Tablero = React.createClass({
   displayName: 'Tablero',
 
+  // Click que delega en app
   tableroClick: function tableroClick(numeroFila, numeroColumna) {
     this.props.manejadorTableroClick(numeroFila, numeroColumna);
   },
+  // renderizo
   render: function render() {
     var casillas = this.props.valores.map((function (valoresFila, indiceFila) {
       var fila = valoresFila.map((function (valor, indiceColumna) {
@@ -34380,25 +34414,33 @@ var Tablero = React.createClass({
 module.exports = Tablero;
 
 },{"./Casilla.jsx":398,"react":394,"react-dom":238}],400:[function(require,module,exports){
+// Variables requeridas de React al no importarlas  en html
 'use strict';
+
+// Componentes a renderizar
 
 var _reactBootstrap = require('react-bootstrap');
 
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+// Componente TextInput
 var TextInput = React.createClass({
   displayName: 'TextInput',
 
+  // Devuelve dimension inicial del tablero
   getInitialState: function getInitialState() {
     return { value: '3' };
   },
+  // Cambio de estado
   handleChange: function handleChange(event, eventkey) {
     this.setState({ value: event.target.value });
   },
+  // Click en boton que delega en app
   click: function click() {
     this.props.manejadorTextInput(this.state.value);
   },
+  // renderizo
   render: function render() {
     var value = this.state.value;
     return React.createElement(
@@ -34422,11 +34464,13 @@ var TextInput = React.createClass({
 module.exports = TextInput;
 
 },{"react":394,"react-bootstrap":71,"react-dom":238}],401:[function(require,module,exports){
+// Variables requeridas de React al no importarlas  en html
 'use strict';
 
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+// Componente app que renderizo
 var App = require("./App.jsx");
 ReactDOM.render(React.createElement(App, null), document.getElementById('contenedor'));
 

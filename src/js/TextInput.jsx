@@ -1,18 +1,27 @@
-import { DropdownButton } from 'react-bootstrap';
-import { MenuItem } from 'react-bootstrap';
+// Variables requeridas de React al no importarlas  en html
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+// Componentes a renderizar
+import { DropdownButton } from 'react-bootstrap';
+import { MenuItem } from 'react-bootstrap';
+
+
+// Componente TextInput
 var TextInput = React.createClass({
+  // Devuelve dimension inicial del tablero
   getInitialState: function() {
     return {value: '3'};
   },
+  // Cambio de estado
   handleChange: function(event, eventkey) {
     this.setState({value: event.target.value});
   },
+  // Click en boton que delega en app
   click: function(){
     this.props.manejadorTextInput(this.state.value);
   },
+  // renderizo
   render: function() {
     var value = this.state.value;
     return (

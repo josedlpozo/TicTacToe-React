@@ -1,17 +1,25 @@
-import { Button } from 'react-bootstrap';
+// Variables requeridas de React al no importarlas  en html
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+// Importo componente Button de bootstrap
+import { Button } from 'react-bootstrap';
+
+// Estilo del componente
 const casillaStyle = {
     height: '100px',
     width: '100px'
 };
+
+// Componente casilla
 let Casilla = React.createClass({
+    // Click que delega en app
     casillaClick: function(){
 
         if(this.props.valor==="-" && this.props.ganador !== true){
             this.props.manejadorClick(this.props.indiceFila, this.props.indiceColumna);
 } },
+    // Devuelve tipo de clase --> clickable o no para bloquear
     getClassName: function(){
       if(this.props.ganador === true){
         return "no_clickable";
@@ -21,6 +29,7 @@ let Casilla = React.createClass({
         return "no_clickable";
       }
     },
+    // Devuelve jugador actual --> también cambia el color del boton
     getJugador: function(){
         if(this.props.valor==="-"){
           return "info";
@@ -30,6 +39,7 @@ let Casilla = React.createClass({
           return "danger";
         }
     },
+    // renderizo
     render: function(){
         return (
         <Button bsStyle={this.getJugador()} style={casillaStyle} className={this.getClassName()}

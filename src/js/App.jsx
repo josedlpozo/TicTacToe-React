@@ -1,19 +1,20 @@
+// Variables requeridas de React al no importarlas  en html
 var React = require('react');
 var ReactDOM = require('react-dom');
-import { Button } from 'react-bootstrap';
-import { DropdownButton } from 'react-bootstrap';
-import { MenuItem } from 'react-bootstrap';
 
+// Componentes a renderizar
 const Tablero = require('./Tablero.jsx');
 const Cabecera = require('./Cabecera.jsx');
 const Button2 = require('./Button2.jsx');
 const TextInput = require('./TextInput.jsx');
+
 const JUGADORX = "jugador 1 - las X";
 const JUGADOR0 = "jugador 2 - los 0";
 
-
+// Clase de aplicación --> Master
 var App = React.createClass({
 
+    // Estado inicial
     getInitialState: function(){
       let rows = 3;
       var x = new Array(rows);
@@ -32,6 +33,7 @@ var App = React.createClass({
         valores: x
       };
     },
+    // Establece numero de filas y valores
     setRowsAndValores: function(row){
       let rows = row;
       var x = new Array(rows);
@@ -45,10 +47,12 @@ var App = React.createClass({
       }
       return {
         rows : rows,
+        ganador : false,
         turno: JUGADORX,
         valores: x
       }
     },
+    // Comprobar si hay ganador tras click en tablero
     comprobarGanador: function(vals, newVal){
 
       // Compruebo filas
@@ -91,7 +95,7 @@ var App = React.createClass({
       }
       nRow = 0;
       num = 0;
-
+      // Compruebo diagonal principal
       while(nRow<this.state.rows){
         if(vals[nRow][nRow] === newVal){
           num++;
@@ -105,6 +109,7 @@ var App = React.createClass({
       nCol = this.state.rows-1;
       nRow = 0;
       num = 0;
+      // Compruebo antidiagonal
       while(nCol>= 0 && nRow<this.state.rows){
         if(vals[nRow][nCol] === newVal){
           num++;
@@ -118,11 +123,12 @@ var App = React.createClass({
 
 			return false;
 	  },
+    // Comprobar si ha sido un empate tras un click
     comprobarEmpate: function(vals){
       var empate = 0;
       var nRow, nCol;
-      for (nRow = 0; nRow < 3; nRow++) {
-          for (nCol = 0; nCol < 3; nCol++) {
+      for (nRow = 0; nRow < this.state.rows; nRow++) {
+          for (nCol = 0; nCol < this.state.rows; nCol++) {
             if (vals[nRow][nCol] !== '-') {
                 empate++;
             }
@@ -131,20 +137,24 @@ var App = React.createClass({
       let cuadros = this.state.rows*this.state.rows;
       if(empate === cuadros) return true;
     },
+    // Reinicia el estado inicial
     reiniciarClick: function(){
       var reinicio = confirm("Desea realmente reiniciar la partida?");
       if (reinicio == true) {
         this.setState(this.setRowsAndValores(this.state.rows));
       }
     },
+    // Click en Casilla - Tablero
     appClick: function(numeroFila, numberoColumna){
       let valores = this.state.valores;
       let nuevoValor = this.state.turno === JUGADORX ? 'X':'0';
       valores[numeroFila][numberoColumna] = nuevoValor;
+      // Cambio de estado
       this.setState({
         turno: this.state.turno === JUGADORX ? JUGADOR0:JUGADORX,
         valores: this.state.valores
       });
+      // Compruebo ganador o empate
       if(this.comprobarGanador(valores, nuevoValor)){
         this.state.ganador = true;
 	    	alert("Ha ganado: " + this.state.turno);
@@ -154,6 +164,7 @@ var App = React.createClass({
   	    }
       }
     },
+    // Introduce texto de tamaño de tablero
     textInputClick: function(rows){
       let y = parseInt(rows,10);
       if(typeof y === 'number'){
@@ -168,13 +179,11 @@ var App = React.createClass({
         }
       }
     },
-    selectValue: function(eventKey){
-      alert(eventKey.text+","+eventKey.value);
-    },
+    // Hay ganador --> sirve para bloquear clicks en el tablero
     getGanador: function(){
-      alert(this.state.ganador);
       return this.state.ganador;
     },
+    // renderizo
     render: function(){
       var texto;
       texto = "Turno del " + this.state.turno;
