@@ -32,3 +32,5 @@ _3. Añadir que la dimension del tablero sea configurable._ --> HECHO
 _4. Nueva arquitectura FLUX._ --> HECHO
 
 _5. Añado número de movimientos._ --> HECHO
+
+_6. Añado contador de victorias._ --> HECHO

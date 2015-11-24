@@ -7,6 +7,8 @@ var rows = 3;
 var ganador = false;
 var empate = false;
 var movimientos = 0;
+var ganadasX = 0;
+var ganadas0 = 0;
 var valoresTablero = getValoresTablero();
 
 function getValoresTablero(){
@@ -124,6 +126,12 @@ var TresEnRayaStore = Object.assign({}, EventEmitter.prototype, {
     getMovimientos: function(){
       return movimientos;
     },
+    getGanadasX: function(){
+      return ganadasX;
+    },
+    getGanadas0: function(){
+      return ganadas0;
+    },
     getEmpate: function(){
       return empate;
     },
@@ -147,6 +155,12 @@ TresEnRayaDispatcher.register(function(payload) {
       empate = comprobarEmpate(valoresTablero);
       if (ganador !== true && empate !== true)
       turno = turno === Constants.JUGADORX ? Constants.JUGADOR0 : Constants.JUGADORX;
+      else{
+        if(empate !== true){
+          if(turno === Constants.JUGADORX) ganadasX++;
+          else ganadas0++;
+        }
+      }
       movimientos++;
       TresEnRayaStore.emitChange();
     break;
@@ -156,6 +170,13 @@ TresEnRayaDispatcher.register(function(payload) {
       empate = false;
       valoresTablero = getValoresTablero();
       movimientos = 0;
+      //ganadasX = 0;
+      //ganadas0 = 0;
+      TresEnRayaStore.emitChange();
+    break;
+    case Constants.ActionTypes.REINICIAR_MARCADORES:
+      ganadasX = 0;
+      ganadas0 = 0;
       TresEnRayaStore.emitChange();
     break;
     case Constants.ActionTypes.NUEVO_TAMAÑO:

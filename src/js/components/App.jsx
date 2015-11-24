@@ -6,10 +6,8 @@ var TresEnRayaStore = require('../stores/TresEnRayaStores');
 const Tablero = require('./Tablero.jsx');
 const Cabecera = require('./Cabecera.jsx');
 const Button2 = require('./Button2.jsx');
+const Button3 = require('./Button3.jsx');
 const TextInput = require('./TextInput.jsx');
-
-const JUGADORX = "jugador 1 - las X";
-const JUGADOR0 = "jugador 2 - los 0";
 
 function getAppStateFromStore() {
   return {
@@ -18,6 +16,8 @@ function getAppStateFromStore() {
     empate: TresEnRayaStore.getEmpate(),
     turno: TresEnRayaStore.getTurno(),
     movimientos: TresEnRayaStore.getMovimientos(),
+    ganadasX: TresEnRayaStore.getGanadasX(),
+    ganadas0: TresEnRayaStore.getGanadas0(),
     valores: TresEnRayaStore.getValores()
   };
 }
@@ -60,7 +60,10 @@ var App = React.createClass({
           <Tablero valores={this.state.valores} ganador={this.state.ganador}/>
           <Button2 />
           <TextInput />
-          <div>Movimientos {this.state.movimientos}</div>
+          <div>Número de movimientos {this.state.movimientos}</div>
+          <div>Partidas ganadas por JUGADORX {this.state.ganadasX}</div>
+          <div>Partidas ganadas por JUGADOR0 {this.state.ganadas0}</div>
+          <Button3 />
         </div> )
 } });
 module.exports = App;

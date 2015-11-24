@@ -14,6 +14,11 @@ var Constants = require('../constants/TresEnRayaConstants');
          type: Constants.ActionTypes.REINICIAR_JUEGO
        });
      },
+     reiniciarMarcadores: function(){
+       TresEnRayaDispatcher.dispatch({
+         type: Constants.ActionTypes.REINICIAR_MARCADORES
+       });
+     },
 
      nuevoTamaño: function(rows){
        TresEnRayaDispatcher.dispatch({
