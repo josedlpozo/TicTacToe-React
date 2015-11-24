@@ -2,6 +2,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+var TresEnRayaActions = require('../actions/TresEnRayaActions');
+
 // Importo componente Button de bootstrap
 import { Button } from 'react-bootstrap';
 
@@ -17,7 +19,7 @@ const buttonStyle = {
 let Button2 = React.createClass({
     // Click delega acción a app
     buttonClick: function(){
-            this.props.manejadorButtonClick();
+            TresEnRayaActions.reiniciarJuego();
    },
    // renderizo
     render: function(){

@@ -1,3 +1,4 @@
+var TresEnRayaActions = require('../actions/TresEnRayaActions');
 // Variables requeridas de React al no importarlas  en html
 var React = require('react');
 var ReactDOM = require('react-dom');
@@ -15,10 +16,10 @@ const casillaStyle = {
 let Casilla = React.createClass({
     // Click que delega en app
     casillaClick: function(){
-
         if(this.props.valor==="-" && this.props.ganador !== true){
-            this.props.manejadorClick(this.props.indiceFila, this.props.indiceColumna);
-} },
+            TresEnRayaActions.jugarPosicion(this.props.indiceFila, this.props.indiceColumna);
+          }
+    },
     // Devuelve tipo de clase --> clickable o no para bloquear
     getClassName: function(){
       if(this.props.ganador === true){

@@ -7,10 +7,6 @@ const Casilla = require('./Casilla.jsx');
 
 // Componente tablero
 var Tablero = React.createClass({
-  // Click que delega en app
-  tableroClick: function(numeroFila, numeroColumna){
-    this.props.manejadorTableroClick(numeroFila, numeroColumna);
-  },
   // renderizo
   render: function(){
     let casillas = this.props.valores.map(function(valoresFila, indiceFila){

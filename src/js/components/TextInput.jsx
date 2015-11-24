@@ -2,6 +2,8 @@
 var React = require('react');
 var ReactDOM = require('react-dom');
 
+var TresEnRayaActions = require('../actions/TresEnRayaActions');
+
 // Componentes a renderizar
 import { DropdownButton } from 'react-bootstrap';
 import { MenuItem } from 'react-bootstrap';
@@ -19,7 +21,7 @@ var TextInput = React.createClass({
   },
   // Click en boton que delega en app
   click: function(){
-    this.props.manejadorTextInput(this.state.value);
+    TresEnRayaActions.nuevoTamaño(this.state.value);
   },
   // renderizo
   render: function() {
